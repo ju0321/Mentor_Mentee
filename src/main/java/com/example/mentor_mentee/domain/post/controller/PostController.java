@@ -1,20 +1,29 @@
 package com.example.mentor_mentee.domain.post.controller;
 
+import com.example.mentor_mentee.domain.post.dto.request.PostRequestDto;
+import com.example.mentor_mentee.domain.post.dto.response.PostResponseDto;
+import com.example.mentor_mentee.domain.post.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
 
-  @PostMapping("/")
-  public String createPost(String title, String content) {
-    return title + ": " + content + "게시글 생성 완료";
+  private final PostService postService;
+
+  @PostMapping
+  public PostResponseDto createPost(@RequestBody PostRequestDto postRequestDto) {
+    PostResponseDto responseDto = postService.createPost(postRequestDto);
+    return responseDto;
   }
 
   @GetMapping
