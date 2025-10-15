@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
 
   @PostMapping
-  public String createComment(@PathVariable(value = "post-id")Long postId,@RequestParam String content) {
+  public String createComment(@PathVariable(value = "post-id")Long postId,@RequestBody String content) {
     return  postId + "번 게시글에 '" + content + "' 댓글 생성 완료";
   }
 
@@ -31,7 +31,7 @@ public class CommentController {
 
   @PutMapping("/{comment-id}")
   public String updateComment(@PathVariable(value = "post-id") Long postId,
-      @PathVariable(value = "comment-id") Long id,@RequestParam String content) {
+      @PathVariable(value = "comment-id") Long id,@RequestBody String content) {
     return postId + "번 게시글의 " + id + "번 댓글 수정 완료 → 내용: " + content;
   }
 
