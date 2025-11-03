@@ -33,4 +33,8 @@ public class Post {
   @Builder.Default
   private Long views = 0L;
 
+  public void update(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
 }

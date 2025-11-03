@@ -1,8 +1,10 @@
 package com.example.mentor_mentee.domain.post.controller;
 
 import com.example.mentor_mentee.domain.post.dto.request.PostRequestDto;
+import com.example.mentor_mentee.domain.post.dto.request.UpdatePostRequestDto;
 import com.example.mentor_mentee.domain.post.dto.response.PostResponseDto;
 import com.example.mentor_mentee.domain.post.service.PostService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,24 +28,26 @@ public class PostController {
     return responseDto;
   }
 
-  @GetMapping
-  public String getAllPosts() {
-    return "게시글 리스트 조회 완료";
+  @GetMapping("/{post-id}")
+  public PostResponseDto getPostById(@PathVariable(value = "post-id") Long id) {
+    PostResponseDto responseDto = postService.readPost(id);
+    return responseDto;
   }
 
-  @GetMapping("/{post-id}")
-  public String getPostById(@PathVariable(value = "post-id") Long id) {
-    return id + "번 게시글 조회 완료";
+  @GetMapping
+  public List<PostResponseDto> getAllPosts() {
+    return postService.readAllPosts();
   }
 
   @PutMapping("/{post-id}")
-  public String updatePost(@PathVariable(value = "post-id") Long id, String title, String content) {
-    return id + "번 게시글 수정 완료";
+  public PostResponseDto updatePost(@RequestBody UpdatePostRequestDto updatePostRequestDto, @PathVariable(value = "post-id") Long id) {
+    PostResponseDto responseDto = postService.updatePost(updatePostRequestDto, id);
+    return responseDto;
   }
 
   @DeleteMapping("/{post-id}")
-  public String deletePost(@PathVariable(value = "post-id") Long id) {
-    return id + "번 게시글 삭제 완료";
+  public String deletePost(@PathVariable(value = "post-id") Long id){
+    postService.deletePost(id);
+    return "삭제 완료";
   }
-
 }
